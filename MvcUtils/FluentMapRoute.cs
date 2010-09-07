@@ -37,46 +37,12 @@ namespace MvcUtils
     public FluentMapRouteSyntax<TController> Handle
       (string url, Expression<Action<TController>> action)
     {
-      var dict = new RouteValueDictionary();
-
-      // get controller name from the type
-      var controllerType = typeof(TController);
-      var controller = controllerType.Name;
-
-      if (controller.EndsWith("Controller"))
-        controller = controller.Substring(0, controller.Length - "Controller".Length);
-
-      dict["Controller"] = controller;
-
       // ensure the controller namespace is included
-      _namespaces.Add(controllerType.Namespace);
-
-      // get action name from the method name in the expression
-      var lambdaExpr = (LambdaExpression)action;
-      var callExpr = (MethodCallExpression)lambdaExpr.Body;
-
-      dict["Action"] = callExpr.Method.Name;
-
-      // get defaults for each arguments/params from the expression
-      // using the supplied value as the default value
-      var callArgs = callExpr.Arguments
-        .Select(arg => arg.CanReduce ? arg.Reduce() : arg)
-        .Cast<ConstantExpression>()
-        .Select(arg => arg.Value);
-
-      var parameters = callExpr.Method
-        .GetParameters()
-        .Select(param => param.Name);
-
-      var args = parameters.Zip(callArgs, Tuple.Create);
-
-      foreach (var pair in args) {
-        dict.Add(pair.Item1, pair.Item2);
-      }
+      _namespaces.Add(typeof(TController).Namespace);
 
       // construct a new route from the finished dictionary
       var route = new Route(url, new MvcRouteHandler()) {
-        Defaults = dict,
+        Defaults = action.ExtractRouteValues(),
         DataTokens = new RouteValueDictionary {
           { "namespaces", _namespaces.ToArray() } 
         }
