@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ControllerExtensions.cs" />
     <Compile Include="ExpressionUtil.cs" />
     <Compile Include="FluentMapRoute.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />
