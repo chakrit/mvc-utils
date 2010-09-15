@@ -31,21 +31,29 @@ namespace MvcUtils
 
       // use the values supplied to the action method as defaults for the
       // respective arguments/pareameters
-      var callArgs = callExpr.Arguments
-        .Select(arg => arg.CanReduce ? arg.Reduce() : arg)
-        .Cast<ConstantExpression>()
-        .Select(arg => arg.Value);
+      var callArgs = callExpr.Arguments.Select(getArgumentValue);
 
-      var parameters = callExpr.Method
+      var args = callExpr.Method
         .GetParameters()
-        .Select(param => param.Name);
-
-      var args = parameters.Zip(callArgs, Tuple.Create);
+        .Select(param => param.Name)
+        .Zip(callArgs, Tuple.Create);
 
       foreach (var pair in args)
         dict.Add(pair.Item1, pair.Item2);
 
       return dict;
+    }
+
+    private static object getArgumentValue(Expression e)
+    {
+      if (e.CanReduce) return getArgumentValue(e.Reduce());
+
+      // TODO: OPTIMIZE! I think lambda can be re-used.
+      //       and expression is probably cachable
+      //       or maybe we can use T4 instead.
+      return (e is ConstantExpression) ?
+        ((ConstantExpression)e).Value :
+        Expression.Lambda<Func<object>>(e).Compile().Invoke();
     }
   }
 }
