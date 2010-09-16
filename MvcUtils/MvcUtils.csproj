@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControllerExtensions.cs" />
+    <Compile Include="Errors.cs" />
     <Compile Include="ExpressionUtil.cs" />
     <Compile Include="FluentMapRoute.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />
