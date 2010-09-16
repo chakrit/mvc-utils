@@ -51,9 +51,15 @@ namespace MvcUtils
       // TODO: OPTIMIZE! I think lambda can be re-used.
       //       and expression is probably cachable
       //       or maybe we can use T4 instead.
-      return (e is ConstantExpression) ?
-        ((ConstantExpression)e).Value :
-        Expression.Lambda<Func<object>>(e).Compile().Invoke();
+      if (e is ConstantExpression) {
+        return ((ConstantExpression)e).Value;
+      }
+      else {
+        e = Expression.Convert(e, typeof(object));
+        return Expression.Lambda<Func<object>>(e)
+          .Compile()
+          .Invoke();
+      }
     }
   }
 }
