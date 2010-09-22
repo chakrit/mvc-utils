@@ -9,7 +9,8 @@ namespace MvcUtils
 {
   internal static class ExpressionUtil
   {
-    public static RouteValueDictionary ExtractRouteValues<TController>(this Expression<Action<TController>> expr)
+    public static RouteValueDictionary ExtractRouteValues<TController>(
+      this Expression<Action<TController>> expr)
       where TController : ControllerBase
     {
       var dict = new RouteValueDictionary();
@@ -36,7 +37,8 @@ namespace MvcUtils
       var args = callExpr.Method
         .GetParameters()
         .Select(param => param.Name)
-        .Zip(callArgs, Tuple.Create);
+        .Zip(callArgs, Tuple.Create)
+        .Where(arg => arg.Item2 != null);
 
       foreach (var pair in args)
         dict.Add(pair.Item1, pair.Item2);
