@@ -10,5 +10,10 @@ namespace MvcUtils
     {
       return new HttpException(404, "Not Found.");
     }
+
+    public static Exception Forbidden()
+    {
+      throw new HttpException(403, "Forbidden.");
+    }
   }
 }
