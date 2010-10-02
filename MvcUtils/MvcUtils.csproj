@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompactGuid.cs" />
     <Compile Include="ControllerExtensions.cs" />
     <Compile Include="Errors.cs" />
     <Compile Include="ExpressionUtil.cs" />
