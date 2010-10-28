@@ -17,6 +17,9 @@ namespace MvcUtils
     private string _str;
 
 
+    public static CompactGuid Empty { get { return new CompactGuid(Guid.Empty); } }
+
+
     public Guid Guid { get { return this; } }
 
     public CompactGuid(string s) { _str = s; _guid = Guid.Empty; }
@@ -41,7 +44,7 @@ namespace MvcUtils
 
     public static implicit operator Guid(CompactGuid source)
     {
-      return (source._guid != Guid.Empty) ?
+      return (source._str == null) ?
         source._guid :
         (source._guid = Unpack(source._str));
     }
