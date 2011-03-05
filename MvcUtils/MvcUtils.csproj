@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -45,6 +46,7 @@
   <ItemGroup>
     <Compile Include="CompactGuid.cs" />
     <Compile Include="ControllerExtensions.cs" />
+    <Compile Include="DateTimeEditViewModel.cs" />
     <Compile Include="Errors.cs" />
     <Compile Include="ExpressionUtil.cs" />
     <Compile Include="ExtendedDataAnnotationsModelMetadataProvider.cs" />
