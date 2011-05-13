@@ -7,14 +7,14 @@ namespace MvcUtils
 {
   public static class ControllerExtensions
   {
-    public static ActionResult RedirectToAction<TController>(this TController controller,
+    public static ActionResult RedirectToAction2<TController>(this TController controller,
       Expression<Action<TController>> action)
       where TController : ControllerBase
     {
       return new RedirectToRouteResult(action.ExtractRouteValues());
     }
 
-    public static ActionResult RedirectToAction<TController>(this ControllerBase controller,
+    public static ActionResult RedirectToAction2<TController>(this ControllerBase controller,
       Expression<Action<TController>> action)
       where TController : ControllerBase
     {
